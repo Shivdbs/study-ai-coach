@@ -10,14 +10,16 @@ from openai import OpenAI
 # os.environ["OPENAI_API_KEY"] = "sk-your-api-key-here"
 try:
     client = OpenAI()
-except:
-    client = None
 
-# --- Page Setup ---
-st.set_page_config(page_title="Study AI", page_icon="🎙️", layout="centered")
-
-# Create the navigation tabs
-tab_speech, tab_notes = st.tabs(["🎙️ Speech Evaluator", "📝 Video Note Maker"])
+except Exception as e:
+                error_message = str(e)
+                if "YouTube is blocking requests from your IP" in error_message:
+                    st.error("🔒 **YouTube Security Block:** YouTube actively blocks cloud servers from downloading transcripts to prevent bots. ")
+                    st.info("💡 **Interview Note:** This feature works perfectly when run locally on a residential Wi-Fi network! Clone the GitHub repo to test it.")
+                elif "NoTranscriptFound" in error_message or "TranscriptsDisabled" in error_message:
+                    st.warning("⚠️ This video does not have English subtitles enabled.")
+                else:
+                    st.error(f"An error occurred: {e}")
 
 # ==========================================
 # TAB 1: The Speech Engine
