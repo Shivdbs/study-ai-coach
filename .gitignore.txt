@@ -1,0 +1,5 @@
+whisper-env/
+__pycache__/
+*.wav
+*.m4a
+.DS_Store
