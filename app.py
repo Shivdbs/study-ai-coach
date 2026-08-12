@@ -96,9 +96,9 @@ with tab_notes:
                     # Extract Video ID
                     video_id = url_input.split("v=")[1].split("&")[0] if "v=" in url_input else \
                     url_input.split("youtu.be/")[1]
-
-                    # Fetch Transcript
-                    transcript_list = YouTubeTranscriptApi.get_transcript(video_id)
+                    # Fetch Transcript (Updated for version 1.x)
+                    ytt_api = YouTubeTranscriptApi()
+                    transcript_list = ytt_api.fetch(video_id).to_raw_data()
                     full_transcript = " ".join([item['text'] for item in transcript_list])
 
                     # Send to OpenAI
